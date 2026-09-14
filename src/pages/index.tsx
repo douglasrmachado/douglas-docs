@@ -7,49 +7,23 @@ import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
-const SKILLS = [
-  'API Documentation',
-  'SDK Documentation',
-  'Docs as Code',
-  'TypeScript',
-  'React',
-  'Node.js',
-];
-
 function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <p className={styles.heroEyebrow}>Technical Writer Portfolio</p>
         <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
           Douglas Machado
         </Heading>
-        <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
-          Technical Writer & Docs as Code specialist
+        <p className={styles.heroTagline}>
+          Technical Writer & Fullstack Developer, focused on documentation
+          for APIs and SaaS products.
         </p>
-        <div className={styles.buttons}>
-          <Link className={styles.ctaPrimary} to="/docs/intro">
-            View my portfolio
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
-          </Link>
-          <Link className={styles.ctaSecondary} href="https://github.com/douglasrmachado">
-            GitHub
-          </Link>
-          <Link
-            className={styles.ctaSecondary}
-            href="https://www.linkedin.com/in/douglasrmachado/">
-            LinkedIn
-          </Link>
-        </div>
-        <ul className={styles.skillList}>
-          {SKILLS.map((skill) => (
-            <li key={skill} className={styles.skillPill}>
-              {skill}
-            </li>
-          ))}
-        </ul>
+        <Link className={styles.ctaPrimary} to="/docs/intro">
+          <span className={styles.ctaLabel}>View my portfolio</span>
+          <span className={styles.ctaArrow} aria-hidden="true">
+            →
+          </span>
+        </Link>
       </div>
     </header>
   );
@@ -59,7 +33,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="Douglas Machado: Technical Writer"
-      description="Technical Writer portfolio: API docs, SDK docs, Docs as Code, and developer documentation.">
+      description="Technical Writer portfolio: API docs, Docs as Code, and developer documentation.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -1,1 +1,0 @@
-{"responses":{"200":{"description":"The requested resource.","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"}},"title":"Resource"},"example":{"id":"res_123","name":"Example resource"}}}},"401":{"description":"Missing or invalid bearer token."},"404":{"description":"No resource exists with that ID."}}}

@@ -31,3 +31,7 @@ I'm a co-founder of Arko. I work as a developer on both the mobile app and backe
 ## API documentation
 
 See the [API Reference](./api/arko-api) for the main endpoints (authentication, workouts, and nutrition tracking), generated from an OpenAPI spec.
+
+:::info[Not a live API]
+The base URL in this reference is a placeholder, the requests aren't callable. This section isn't meant to be tested, it's a demonstration: how I structure and write API documentation for a real system, and the kind of documentation work I'd do for yours.
+:::

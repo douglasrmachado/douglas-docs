@@ -1,6 +1,5 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 import arkoApiSidebar from './docs/projects/arko/api/sidebar';
-import sampleProjectApiSidebar from './docs/projects/sample-project/api/sidebar';
 
 // The generated per-tag categories (Auth, Treino, Alimentação, ...) come with
 // a `link` to a tag overview doc, which makes clicking the category label
@@ -49,22 +48,6 @@ const sidebars: SidebarsConfig = {
               type: 'category',
               label: 'API Reference',
               items: asPureToggleCategories(arkoApiSidebar),
-            },
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Sample Project (Template)',
-          items: [
-            {
-              type: 'doc',
-              id: 'projects/sample-project/overview',
-              label: 'Overview',
-            },
-            {
-              type: 'category',
-              label: 'API Reference',
-              items: asPureToggleCategories(sampleProjectApiSidebar),
             },
           ],
         },

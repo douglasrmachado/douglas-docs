@@ -2,10 +2,14 @@ openapi: 3.0.3
 info:
   title: Arko API
   version: '1.0'
-  description: >
-    A representative slice of the Arko backend API: authentication, workouts,
-    and nutrition tracking. Simplified from the real implementation for
-    documentation purposes. This is not the full API surface.
+  description: |
+    A representative slice of the Arko backend API: authentication, workouts, and nutrition tracking. The full product also covers a social feed, physical progress tracking, gamification, and an admin panel for gyms and professionals, left out here to keep this reference focused.
+
+    This reference exists to demonstrate two things: how I structure API documentation (request/response shapes, authentication, errors), and how the underlying system is actually built.
+
+    :::info[Not a live API]
+    The base URL below is a placeholder. These endpoints can't be called, this section is for demonstration only.
+    :::
 servers:
   - url: https://api.arko.example.com/api
 security:

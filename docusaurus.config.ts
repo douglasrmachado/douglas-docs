@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Douglas Machado',
-  tagline: 'Technical Writer & Docs as Code specialist',
+  tagline: 'Technical Writer & Fullstack Developer',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -81,14 +81,6 @@ const config: Config = {
               categoryLinkSource: 'tag',
             },
           },
-          sampleProject: {
-            specPath: 'openapi/sample-project.yaml',
-            outputDir: 'docs/projects/sample-project/api',
-            sidebarOptions: {
-              groupPathsBy: 'tag',
-              categoryLinkSource: 'tag',
-            },
-          },
         },
       },
     ],
@@ -143,41 +135,8 @@ const config: Config = {
         // static/files/resume.pdf exists (a broken link fails the build).
       ],
     },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Portfolio',
-          items: [
-            {label: 'Welcome', to: '/docs/intro'},
-            {label: 'About Me', to: '/docs/about-me'},
-            {label: 'Experience', to: '/docs/experience'},
-            {label: 'Technical Writing', to: '/docs/technical-writing'},
-            {label: 'Docs as Code', to: '/docs/docs-as-code'},
-            {label: 'Technical Stack', to: '/docs/technical-stack'},
-            {label: 'Projects', to: '/docs/category/projects'},
-          ],
-        },
-        {
-          title: 'Connect',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/douglasrmachado',
-            },
-            {
-              label: 'LinkedIn',
-              href: 'https://www.linkedin.com/in/douglasrmachado/',
-            },
-            {
-              label: 'Email',
-              href: 'mailto:douglas@writechoice.io',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Douglas Machado. Built with Docusaurus.`,
-    },
+    // The footer itself is a custom component (src/theme/Footer) — kept
+    // slim, icon-only, instead of the classic multi-column layout.
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

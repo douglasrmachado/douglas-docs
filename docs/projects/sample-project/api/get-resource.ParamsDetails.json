@@ -1,1 +1,0 @@
-{"parameters":[{"name":"id","in":"path","required":true,"description":"The resource ID.","schema":{"type":"string"}}]}

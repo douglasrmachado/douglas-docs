@@ -105,8 +105,8 @@ const GROUPS: CardGroup[] = [
       {
         icon: Mail,
         title: 'Email',
-        description: 'douglas@writechoice.io for direct contact.',
-        href: 'mailto:douglas@writechoice.io',
+        description: 'douglasroqmachado@gmail.com for direct contact.',
+        href: 'mailto:douglasroqmachado@gmail.com',
         linkLabel: 'Send email',
       },
     ],
