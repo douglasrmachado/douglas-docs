@@ -1,0 +1,617 @@
+openapi: 3.0.3
+info:
+  title: Arko API
+  version: '1.0'
+  description: >
+    A representative slice of the Arko backend API: authentication, workouts,
+    and nutrition tracking. Simplified from the real implementation for
+    documentation purposes. This is not the full API surface.
+servers:
+  - url: https://api.arko.example.com/api
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+    description: Login, registration, and password recovery. Login and registration don't require a token.
+  - name: Treino
+    description: "Workouts: structured training plans made up of exercises, sets, and reps."
+  - name: Alimentação
+    description: "Nutrition: daily meal check-ins and nutrition goals."
+paths:
+  /login:
+    post:
+      operationId: login
+      tags:
+        - Auth
+      summary: Log in
+      description: >
+        Authenticates a student, professional (personal trainer / nutritionist),
+        or gym account, and returns a JWT. If `tipo` is omitted, the API resolves
+        the account type by email.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - senha
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  format: password
+                tipo:
+                  type: string
+                  enum: [aluno, profissional, academia]
+                  description: Account type. Optional, resolved automatically when omitted.
+      responses:
+        '200':
+          description: Authenticated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Incorrect email or password.
+  /register:
+    post:
+      operationId: register
+      tags:
+        - Auth
+      summary: Register a new account
+      description: >
+        Creates a student, professional, or gym account. The required fields
+        beyond `tipo`, `email`, and `senha` vary by account type (e.g. a
+        student profile vs. a gym's business details).
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tipo
+                - email
+                - senha
+              properties:
+                tipo:
+                  type: string
+                  enum: [aluno, profissional, academia]
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  format: password
+              additionalProperties: true
+      responses:
+        '201':
+          description: Account created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Missing or invalid fields, or email already registered.
+  /forgot-password:
+    post:
+      operationId: forgotPassword
+      tags:
+        - Auth
+      summary: Request a password reset code
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Reset code sent to the account's email.
+        '404':
+          description: No account found with that email.
+  /reset-password:
+    post:
+      operationId: resetPassword
+      tags:
+        - Auth
+      summary: Reset the password using a code
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - token
+                - novaSenha
+              properties:
+                email:
+                  type: string
+                  format: email
+                token:
+                  type: string
+                  description: The 6-digit code sent by /forgot-password.
+                novaSenha:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Password updated.
+        '400':
+          description: Invalid or expired code.
+  /aluno/{alunoId}/treinos:
+    get:
+      operationId: listTreinos
+      tags:
+        - Treino
+      summary: List a student's workouts
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The student's workouts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Treino'
+        '403':
+          description: Not authorized to view this student's workouts.
+    post:
+      operationId: createTreino
+      tags:
+        - Treino
+      summary: Create a workout for a student
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreinoInput'
+      responses:
+        '201':
+          description: The created workout.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Treino'
+        '400':
+          description: Missing required fields (name and goal).
+        '403':
+          description: Not authorized to create workouts for this student.
+  /treino/{id}:
+    get:
+      operationId: getTreino
+      tags:
+        - Treino
+      summary: Get a single workout
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The requested workout.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Treino'
+        '403':
+          description: Not authorized to view this workout.
+        '404':
+          description: Workout not found.
+    put:
+      operationId: updateTreino
+      tags:
+        - Treino
+      summary: Update a workout
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreinoInput'
+      responses:
+        '200':
+          description: The updated workout.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Treino'
+        '403':
+          description: Not authorized to edit this workout.
+        '404':
+          description: Workout not found.
+    delete:
+      operationId: deleteTreino
+      tags:
+        - Treino
+      summary: Delete a workout
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Workout removed.
+        '403':
+          description: Not authorized to remove this workout.
+        '404':
+          description: Workout not found.
+  /treino/{id}/finalizar:
+    post:
+      operationId: finalizarTreino
+      tags:
+        - Treino
+      summary: Log a completed workout session
+      description: >
+        Records that a student finished a workout: duration, which exercises
+        were completed (with the actual weight used per set), and optional
+        GPS data for cardio sessions.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                duracaoMinutos:
+                  type: integer
+                duracaoSegundos:
+                  type: integer
+                exerciciosConcluidos:
+                  type: array
+                  items:
+                    type: object
+                  description: Which exercises were completed in this session.
+                pesosPorSerie:
+                  type: array
+                  items:
+                    type: object
+                  description: Actual weight used per set, for progress tracking.
+                dataTreino:
+                  type: string
+                  format: date
+                foto:
+                  type: string
+                  description: URL of an optional photo attached to the session.
+                tipoCardio:
+                  type: string
+                  description: Present for cardio workouts (e.g. running, cycling).
+                coordenadas:
+                  type: array
+                  items:
+                    type: object
+                  description: GPS track for cardio workouts.
+      responses:
+        '200':
+          description: Completed session recorded.
+        '403':
+          description: Not authorized to log this workout.
+        '404':
+          description: Workout not found.
+  /aluno/{alunoId}/checkins-alimentacao:
+    get:
+      operationId: listCheckInsAlimentacao
+      tags:
+        - Alimentação
+      summary: List a student's nutrition check-ins
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The student's nutrition check-ins, most recent first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckInAlimentacao'
+        '403':
+          description: Not authorized to view this student's check-ins.
+    post:
+      operationId: createCheckInAlimentacao
+      tags:
+        - Alimentação
+      summary: Create or update a day's nutrition check-in
+      description: >
+        Upserts the check-in for the given date. If one already exists for
+        that student and date, it's updated instead of duplicated.
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInAlimentacaoInput'
+      responses:
+        '200':
+          description: Existing check-in updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckInAlimentacao'
+        '201':
+          description: New check-in created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckInAlimentacao'
+        '400':
+          description: Missing required date field.
+        '403':
+          description: Not authorized to check in for this student.
+  /aluno/{alunoId}/metas-alimentacao:
+    get:
+      operationId: getMetasAlimentacao
+      tags:
+        - Alimentação
+      summary: Get a student's nutrition goals
+      description: Creates a default goal (2000 kcal) the first time it's requested for a student.
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The student's nutrition goals.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaAlimentacao'
+        '403':
+          description: Not authorized to view this student's goals.
+    put:
+      operationId: updateMetasAlimentacao
+      tags:
+        - Alimentação
+      summary: Update a student's nutrition goals
+      description: Only the student's own professional (nutritionist) or the student can set these.
+      parameters:
+        - name: alunoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetaAlimentacao'
+      responses:
+        '200':
+          description: Updated nutrition goals.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaAlimentacao'
+        '403':
+          description: Not authorized to set this student's goals.
+        '404':
+          description: Student not found.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        token:
+          type: string
+          description: JWT to send as a Bearer token on subsequent requests.
+        userType:
+          type: string
+          enum: [aluno, profissional, academia]
+        cadastroCompleto:
+          type: boolean
+          description: Whether the account still needs to complete required profile fields.
+        user:
+          type: object
+          description: Shape varies by userType (student, professional, or gym).
+          additionalProperties: true
+    ExercicioTreino:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        grupo:
+          type: string
+          description: Muscle group targeted.
+        series:
+          type: integer
+        repeticoes:
+          type: integer
+        peso:
+          type: number
+          nullable: true
+        tempoDescanso:
+          type: integer
+          nullable: true
+          description: Rest time in seconds.
+        tecnicaId:
+          type: integer
+          nullable: true
+        ordem:
+          type: integer
+    Treino:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        objetivo:
+          type: string
+        frequencia:
+          type: string
+          example: '3-4x per week'
+        restricoes:
+          type: string
+          nullable: true
+        isPublic:
+          type: boolean
+          description: Whether this workout is visible in the community feed.
+        geradoPorIA:
+          type: boolean
+        tipoCardio:
+          type: string
+          nullable: true
+        usaGPS:
+          type: boolean
+          nullable: true
+        exercicios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExercicioTreino'
+    TreinoInput:
+      type: object
+      required:
+        - nome
+        - objetivo
+      properties:
+        nome:
+          type: string
+        objetivo:
+          type: string
+        frequencia:
+          type: string
+        restricoes:
+          type: string
+        isPublic:
+          type: boolean
+        tipoCardio:
+          type: string
+        usaGPS:
+          type: boolean
+        exercicios:
+          type: array
+          items:
+            type: object
+          description: Exercises that make up the workout, in order.
+    CheckInAlimentacao:
+      type: object
+      properties:
+        id:
+          type: integer
+        alunoId:
+          type: integer
+        data:
+          type: string
+          format: date
+        refeicoes:
+          type: array
+          items:
+            type: object
+          description: Logged meals for the day.
+        calorias:
+          type: number
+        proteinas:
+          type: number
+        carboidratos:
+          type: number
+        gorduras:
+          type: number
+        agua:
+          type: number
+          description: Water intake in milliliters.
+        treinoRealizado:
+          type: boolean
+    CheckInAlimentacaoInput:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: string
+          format: date
+        refeicoes:
+          type: array
+          items:
+            type: object
+        calorias:
+          type: number
+        proteinas:
+          type: number
+        carboidratos:
+          type: number
+        gorduras:
+          type: number
+        agua:
+          type: number
+        treinoRealizado:
+          type: boolean
+    MetaAlimentacao:
+      type: object
+      properties:
+        calorias:
+          type: number
+        proteinas:
+          type: number
+        carboidratos:
+          type: number
+        gorduras:
+          type: number
+        agua:
+          type: number

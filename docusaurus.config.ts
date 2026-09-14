@@ -1,0 +1,166 @@
+import {themes as prismThemes} from 'prism-react-renderer';
+import type {Config} from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
+
+// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+const config: Config = {
+  title: 'Douglas Machado',
+  tagline: 'Technical Writer & Docs as Code specialist',
+  favicon: 'img/favicon.ico',
+
+  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+  future: {
+    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+  },
+
+  // Placeholder GitHub Pages target: update once this site has a real home.
+  // For a custom domain, set url to that domain and baseUrl back to '/'.
+  url: 'https://douglasrmachado.github.io',
+  baseUrl: '/douglas-docs/',
+
+  organizationName: 'douglasrmachado',
+  projectName: 'douglas-docs',
+
+  onBrokenLinks: 'throw',
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+  },
+
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        indexDocs: true,
+        indexBlog: false,
+        indexPages: true,
+        docsRouteBasePath: '/docs',
+      },
+    ],
+    'docusaurus-theme-openapi-docs',
+  ],
+
+  plugins: [
+    'docusaurus-plugin-sass',
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: 'openapi',
+        docsPluginId: 'classic',
+        config: {
+          arko: {
+            specPath: 'openapi/arko.yaml',
+            outputDir: 'docs/projects/arko/api',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+              categoryLinkSource: 'tag',
+            },
+          },
+          sampleProject: {
+            specPath: 'openapi/sample-project.yaml',
+            outputDir: 'docs/projects/sample-project/api',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+              categoryLinkSource: 'tag',
+            },
+          },
+        },
+      },
+    ],
+  ],
+
+  presets: [
+    [
+      'classic',
+      {
+        docs: {
+          sidebarPath: './sidebars.ts',
+          docItemComponent: '@theme/ApiItem',
+        },
+        blog: false,
+        theme: {
+          customCss: './src/css/custom.css',
+        },
+      } satisfies Preset.Options,
+    ],
+  ],
+
+  themeConfig: {
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
+    navbar: {
+      title: 'Douglas Machado',
+      items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'portfolioSidebar',
+          position: 'left',
+          label: 'Portfolio',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'projectsSidebar',
+          position: 'left',
+          label: 'Projects',
+        },
+        {
+          href: 'https://github.com/douglasrmachado',
+          label: 'GitHub',
+          position: 'right',
+        },
+        {
+          href: 'https://www.linkedin.com/in/douglasrmachado/',
+          label: 'LinkedIn',
+          position: 'right',
+        },
+        // Add a "Resume" navbar item pointing to '/files/resume.pdf' once
+        // static/files/resume.pdf exists (a broken link fails the build).
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Portfolio',
+          items: [
+            {label: 'Welcome', to: '/docs/intro'},
+            {label: 'About Me', to: '/docs/about-me'},
+            {label: 'Experience', to: '/docs/experience'},
+            {label: 'Technical Writing', to: '/docs/technical-writing'},
+            {label: 'Docs as Code', to: '/docs/docs-as-code'},
+            {label: 'Technical Stack', to: '/docs/technical-stack'},
+            {label: 'Projects', to: '/docs/category/projects'},
+          ],
+        },
+        {
+          title: 'Connect',
+          items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/douglasrmachado',
+            },
+            {
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/in/douglasrmachado/',
+            },
+            {
+              label: 'Email',
+              href: 'mailto:douglas@writechoice.io',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Douglas Machado. Built with Docusaurus.`,
+    },
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
+    },
+  } satisfies Preset.ThemeConfig,
+};
+
+export default config;

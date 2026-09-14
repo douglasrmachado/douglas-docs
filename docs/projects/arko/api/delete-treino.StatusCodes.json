@@ -1,0 +1,1 @@
+{"responses":{"200":{"description":"Workout removed."},"403":{"description":"Not authorized to remove this workout."},"404":{"description":"Workout not found."}}}

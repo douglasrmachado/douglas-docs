@@ -1,0 +1,1 @@
+{"title":"Body","body":{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["email","senha"],"properties":{"email":{"type":"string","format":"email"},"senha":{"type":"string","format":"password"},"tipo":{"type":"string","enum":["aluno","profissional","academia"],"description":"Account type. Optional, resolved automatically when omitted."}}}}}}}

@@ -1,0 +1,1 @@
+{"parameters":[{"name":"alunoId","in":"path","required":true,"schema":{"type":"integer"}}]}

@@ -1,0 +1,1 @@
+{"responses":{"200":{"description":"Completed session recorded."},"403":{"description":"Not authorized to log this workout."},"404":{"description":"Workout not found."}}}
