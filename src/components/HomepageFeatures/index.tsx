@@ -1,11 +1,21 @@
-import type {ReactNode} from 'react';
+import type {ComponentType, ReactNode, SVGProps} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import {
+  User,
+  Compass,
+  PenLine,
+  GitBranch,
+  Wrench,
+  FolderKanban,
+  Mail,
+} from 'lucide-react';
+import {GithubIcon, LinkedinIcon} from './BrandIcons';
 import styles from './styles.module.css';
 
 type CardItem = {
-  icon: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   title: string;
   description: ReactNode;
   to?: string;
@@ -25,14 +35,14 @@ const GROUPS: CardGroup[] = [
     description: 'Who I am and the background I bring to documentation work.',
     items: [
       {
-        icon: '👋',
+        icon: User,
         title: 'About Me',
         description:
           'A Technical Writer with a software development background, and how that shapes the way I write docs.',
         to: '/docs/about-me',
       },
       {
-        icon: '🧭',
+        icon: Compass,
         title: 'Experience',
         description:
           'The kind of work I do day to day: APIs, SDKs, SaaS products, and developer-facing documentation.',
@@ -45,28 +55,28 @@ const GROUPS: CardGroup[] = [
     description: 'The core of my documentation practice.',
     items: [
       {
-        icon: '✍️',
+        icon: PenLine,
         title: 'Technical Writing',
         description:
           'API references, SDK guides, quickstarts, and the writing principles behind them.',
         to: '/docs/technical-writing',
       },
       {
-        icon: '🔀',
+        icon: GitBranch,
         title: 'Docs as Code',
         description:
           'Git, GitHub, pull requests, and automated checks: documentation managed like software.',
         to: '/docs/docs-as-code',
       },
       {
-        icon: '🧰',
+        icon: Wrench,
         title: 'Technical Stack',
         description:
           'The languages, frameworks, and documentation platforms I work with, including this site.',
         to: '/docs/technical-stack',
       },
       {
-        icon: '📁',
+        icon: FolderKanban,
         title: 'Projects',
         description:
           'A closer look at real projects: what they are, and the API endpoints I documented for them.',
@@ -79,21 +89,21 @@ const GROUPS: CardGroup[] = [
     description: "Where to find me, or to see this site's source.",
     items: [
       {
-        icon: '💻',
+        icon: GithubIcon,
         title: 'GitHub',
         description: 'Code, docs projects, and this site’s source.',
         href: 'https://github.com/douglasrmachado',
         linkLabel: 'Open profile',
       },
       {
-        icon: '🔗',
+        icon: LinkedinIcon,
         title: 'LinkedIn',
         description: 'Full role history, companies, and a way to reach out.',
         href: 'https://www.linkedin.com/in/douglasrmachado/',
         linkLabel: 'Open profile',
       },
       {
-        icon: '✉️',
+        icon: Mail,
         title: 'Email',
         description: 'douglas@writechoice.io for direct contact.',
         href: 'mailto:douglas@writechoice.io',
@@ -112,14 +122,12 @@ function colClassForCount(count: number): string {
   return 'col--4';
 }
 
-function Card({icon, title, description, to, href, linkLabel, colClassName}: CardItem & {colClassName: string}) {
+function Card({icon: Icon, title, description, to, href, linkLabel, colClassName}: CardItem & {colClassName: string}) {
   return (
     <div className={clsx('col', colClassName)}>
       <div className={clsx('card', styles.featureCard)}>
         <div className="card__body">
-          <div className={styles.featureIcon} aria-hidden="true">
-            {icon}
-          </div>
+          <Icon className={styles.featureIcon} aria-hidden="true" />
           <Heading as="h3">{title}</Heading>
           <p>{description}</p>
         </div>

@@ -28,16 +28,17 @@ function HomepageHeader() {
           Technical Writer & Docs as Code specialist
         </p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs/intro">
+          <Link className={styles.ctaPrimary} to="/docs/intro">
             View my portfolio
+            <span className={styles.ctaArrow} aria-hidden="true">
+              →
+            </span>
           </Link>
-          <Link
-            className="button button--outline button--secondary button--lg"
-            href="https://github.com/douglasrmachado">
+          <Link className={styles.ctaSecondary} href="https://github.com/douglasrmachado">
             GitHub
           </Link>
           <Link
-            className="button button--outline button--secondary button--lg"
+            className={styles.ctaSecondary}
             href="https://www.linkedin.com/in/douglasrmachado/">
             LinkedIn
           </Link>

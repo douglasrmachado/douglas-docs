@@ -49,6 +49,57 @@
   margin-bottom: 2.5rem;
 }
 
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--ifm-font-family-base);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.ctaPrimary {
+  color: #ffffff;
+  background: var(--ifm-color-primary);
+  border: 1px solid var(--ifm-color-primary);
+}
+
+.ctaPrimary:hover {
+  color: #ffffff;
+  background: var(--ifm-color-primary-light);
+  border-color: var(--ifm-color-primary-light);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.ctaSecondary:hover {
+  color: #ffffff;
+  border-color: var(--ifm-color-primary-lighter);
+  background: rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
 .skillList {
   display: flex;
   flex-wrap: wrap;
