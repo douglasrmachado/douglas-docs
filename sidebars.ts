@@ -1,7 +1,7 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 import arkoApiSidebar from './docs/projects/arko/api/sidebar';
 
-// The generated per-tag categories (Auth, Treino, Alimentação, ...) come with
+// The generated per-tag categories (Auth, Workouts, Nutrition, ...) come with
 // a `link` to a tag overview doc, which makes clicking the category label
 // navigate instead of just expanding it. Strip the link and surface that same
 // doc as an explicit "Overview" item at the top of the category instead.

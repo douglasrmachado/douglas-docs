@@ -17,10 +17,10 @@ security:
 tags:
   - name: Auth
     description: Login, registration, and password recovery. Login and registration don't require a token.
-  - name: Treino
-    description: "Workouts: structured training plans made up of exercises, sets, and reps."
-  - name: Alimentação
-    description: "Nutrition: daily meal check-ins and nutrition goals."
+  - name: Workouts
+    description: "Structured training plans made up of exercises, sets, and reps."
+  - name: Nutrition
+    description: "Daily meal check-ins and nutrition goals."
 paths:
   /login:
     post:
@@ -161,9 +161,9 @@ paths:
           description: Invalid or expired code.
   /aluno/{alunoId}/treinos:
     get:
-      operationId: listTreinos
+      operationId: listWorkouts
       tags:
-        - Treino
+        - Workouts
       summary: List a student's workouts
       parameters:
         - name: alunoId
@@ -179,13 +179,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Treino'
+                  $ref: '#/components/schemas/Workout'
         '403':
           description: Not authorized to view this student's workouts.
     post:
-      operationId: createTreino
+      operationId: createWorkout
       tags:
-        - Treino
+        - Workouts
       summary: Create a workout for a student
       parameters:
         - name: alunoId
@@ -198,23 +198,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TreinoInput'
+              $ref: '#/components/schemas/WorkoutInput'
       responses:
         '201':
           description: The created workout.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Treino'
+                $ref: '#/components/schemas/Workout'
         '400':
           description: Missing required fields (name and goal).
         '403':
           description: Not authorized to create workouts for this student.
   /treino/{id}:
     get:
-      operationId: getTreino
+      operationId: getWorkout
       tags:
-        - Treino
+        - Workouts
       summary: Get a single workout
       parameters:
         - name: id
@@ -228,15 +228,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Treino'
+                $ref: '#/components/schemas/Workout'
         '403':
           description: Not authorized to view this workout.
         '404':
           description: Workout not found.
     put:
-      operationId: updateTreino
+      operationId: updateWorkout
       tags:
-        - Treino
+        - Workouts
       summary: Update a workout
       parameters:
         - name: id
@@ -249,22 +249,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TreinoInput'
+              $ref: '#/components/schemas/WorkoutInput'
       responses:
         '200':
           description: The updated workout.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Treino'
+                $ref: '#/components/schemas/Workout'
         '403':
           description: Not authorized to edit this workout.
         '404':
           description: Workout not found.
     delete:
-      operationId: deleteTreino
+      operationId: deleteWorkout
       tags:
-        - Treino
+        - Workouts
       summary: Delete a workout
       parameters:
         - name: id
@@ -281,9 +281,9 @@ paths:
           description: Workout not found.
   /treino/{id}/finalizar:
     post:
-      operationId: finalizarTreino
+      operationId: completeWorkout
       tags:
-        - Treino
+        - Workouts
       summary: Log a completed workout session
       description: >
         Records that a student finished a workout: duration, which exercises
@@ -339,9 +339,9 @@ paths:
           description: Workout not found.
   /aluno/{alunoId}/checkins-alimentacao:
     get:
-      operationId: listCheckInsAlimentacao
+      operationId: listNutritionCheckIns
       tags:
-        - Alimentação
+        - Nutrition
       summary: List a student's nutrition check-ins
       parameters:
         - name: alunoId
@@ -357,13 +357,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CheckInAlimentacao'
+                  $ref: '#/components/schemas/NutritionCheckIn'
         '403':
           description: Not authorized to view this student's check-ins.
     post:
-      operationId: createCheckInAlimentacao
+      operationId: createNutritionCheckIn
       tags:
-        - Alimentação
+        - Nutrition
       summary: Create or update a day's nutrition check-in
       description: >
         Upserts the check-in for the given date. If one already exists for
@@ -379,29 +379,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CheckInAlimentacaoInput'
+              $ref: '#/components/schemas/NutritionCheckInInput'
       responses:
         '200':
           description: Existing check-in updated.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CheckInAlimentacao'
+                $ref: '#/components/schemas/NutritionCheckIn'
         '201':
           description: New check-in created.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CheckInAlimentacao'
+                $ref: '#/components/schemas/NutritionCheckIn'
         '400':
           description: Missing required date field.
         '403':
           description: Not authorized to check in for this student.
   /aluno/{alunoId}/metas-alimentacao:
     get:
-      operationId: getMetasAlimentacao
+      operationId: getNutritionGoals
       tags:
-        - Alimentação
+        - Nutrition
       summary: Get a student's nutrition goals
       description: Creates a default goal (2000 kcal) the first time it's requested for a student.
       parameters:
@@ -416,13 +416,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MetaAlimentacao'
+                $ref: '#/components/schemas/NutritionGoals'
         '403':
           description: Not authorized to view this student's goals.
     put:
-      operationId: updateMetasAlimentacao
+      operationId: updateNutritionGoals
       tags:
-        - Alimentação
+        - Nutrition
       summary: Update a student's nutrition goals
       description: Only the student's own professional (nutritionist) or the student can set these.
       parameters:
@@ -436,14 +436,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MetaAlimentacao'
+              $ref: '#/components/schemas/NutritionGoals'
       responses:
         '200':
           description: Updated nutrition goals.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MetaAlimentacao'
+                $ref: '#/components/schemas/NutritionGoals'
         '403':
           description: Not authorized to set this student's goals.
         '404':
@@ -473,7 +473,7 @@ components:
           type: object
           description: Shape varies by userType (student, professional, or gym).
           additionalProperties: true
-    ExercicioTreino:
+    WorkoutExercise:
       type: object
       properties:
         id:
@@ -499,7 +499,7 @@ components:
           nullable: true
         ordem:
           type: integer
-    Treino:
+    Workout:
       type: object
       properties:
         id:
@@ -528,8 +528,8 @@ components:
         exercicios:
           type: array
           items:
-            $ref: '#/components/schemas/ExercicioTreino'
-    TreinoInput:
+            $ref: '#/components/schemas/WorkoutExercise'
+    WorkoutInput:
       type: object
       required:
         - nome
@@ -554,7 +554,7 @@ components:
           items:
             type: object
           description: Exercises that make up the workout, in order.
-    CheckInAlimentacao:
+    NutritionCheckIn:
       type: object
       properties:
         id:
@@ -582,7 +582,7 @@ components:
           description: Water intake in milliliters.
         treinoRealizado:
           type: boolean
-    CheckInAlimentacaoInput:
+    NutritionCheckInInput:
       type: object
       required:
         - data
@@ -606,7 +606,7 @@ components:
           type: number
         treinoRealizado:
           type: boolean
-    MetaAlimentacao:
+    NutritionGoals:
       type: object
       properties:
         calorias:

@@ -1,0 +1,70 @@
+---
+id: create-nutrition-check-in
+title: "Create or update a day's nutrition check-in"
+description: "Upserts the check-in for the given date. If one already exists for that student and date, it's updated instead of duplicated."
+sidebar_label: "Create or update a day's nutrition check-in"
+hide_title: true
+hide_table_of_contents: true
+api: eJztl1+PEzkMwL+KlRdAmm3LHtLp5m0PcVJPHIeWRTyUPriJOxOaSYbEs6VU/e4nZ6Z/tlt4QSfxwD5tE9tx7F9sz1aFliKyDX5qVKl0JGR603G0svayJr2aelUoxiqpcqYOW2peKENJR9vmn6V63yaKnIBrAi2KV9bDMsS8UNl78mCQaQTTJQRPgC4Smg3QF5s4DZLIkLgz5BnQm6xQgOUnCbpWfhiwPjGhgbAE07XOalkdfRQnW4zYEFMUV7fKY0OqVOg6H6ZGFcqKmy1yrQoV6XNnIxlVcuyoUEnX1KAqt4o3rahZz1RRVLvdvJemxH8GsxGRc2UdPJNn2cK298kGP/6UJDDbx7bD4hNpfuDFTBlklKi2UXLClpJo5NWjZuJofaUKtQyxQValCJDaiaklWR16rUEaY8SNXJypSY/P3+0KpdGFaPF013fNQi6eXWGy/hu7GuMiWBORw2WBKkTTxW9oY9XhxQ2OZH24JXT2K5pwIrMIwRH67DdbdrJ2zurUt53cbJdDktrgUx+S68kkx/MBs6+EPeurI7ADZiP1A1l9mEFrLlFVHLi8uPm/pv385b4OVUUGGkKXDi/W4Gakfj5Azn3/gEwRrGdcEVgPjXXOOitFYPTjNA0gXU+eP2bnDa2P2PSF8xc2v7A5webFpZLzj01JKs6+9OceB0tLzuSTX0x+u8BaYMCO6xDtVzLAoScPDh3Wpn3fHGXPGuI6SEdvQ8psSdcr1TjTM94OEO3G2Yz16QqdbcgzagyqUIni/b6NdtGpUtXMbSrHY2ztCOMqjOgLNq2jkQ6NLCppk4l0Fy1vst6CMFK86eTg2fx0+508gR69U6FDiOUsNbTkHPIspIrhn7/2MP/94S5fVp7W7bFDv+o9O3ZPdT25fnE1+f3q+g/1AP3ZVtw6ojp5gObkHMXJKXqTPWqTC7TIWLCTgWPZozNwchNXAW7eTlWhJLx9bp+PJo/wvIFIbaQkGWF7T5Cc1SQzj7yxbGaBekXeiLkys0Geh1pTwDrEVeg4FXmK8ns8gSNKuqsR3NUEy845aGMwnWZAlwLoIH4BQgraooMlkSmgrTfJasyyVaSUDnYKqLCxy8O5chp6QNNYDy16cpnPatOkvNfGsKQkF0eXCnC0ZAgdQ02RhOoVUdvTLFmK5DXBMugu5RHvo797uDWMjhzAUBN84ihviddBbPgqlVCHNUwhcew0d5EkWmCC7po+ssHD02G2G++nBUg1tiShOwsqxRhietbfUgxLLjpvKLqNvOi0SUwN2ASouUPnNrDorOPseVmWQsMsv2RwktObt9O5XIlggYng/e1rWJAL62wBWoea6uAMxZytREDetMF6TqDRP2FYEGh0TlLUVwDS+Uq2L8fHmMhi8G4zyn589LkGh8QN5pY0DMovcw+DEIchCFCq+ZN0ws++350Duz12vZ/gO2AoI0xfeNw6tPm+uYxth0I469uoKlR5/Dy4WAvnhaqlhJYztd1Knt5Ht9vJ8ueOolS6eaHuMVpcyBOfbZWxSf43qlyiS/SdSD29HXrAM/iW1/vW7KUx36Pr5Jcq1Io2J582u/muUDWhoZhd6Hdf9gdd3YmNo/ajoWRX7DVutKaWvys7P+ktb/99dydVefgqaoIRnYhrqbK47j0N+eK52Oe1rXLoqw4rke1tyt9/nE0Qyw==
+sidebar_class_name: "post api-method"
+info_path: docs/projects/arko/api/arko-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create or update a day's nutrition check-in"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/aluno/{alunoId}/checkins-alimentacao"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Upserts the check-in for the given date. If one already exists for that student and date, it's updated instead of duplicated.
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  {...require("./create-nutrition-check-in.ParamsDetails.json")}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  {...require("./create-nutrition-check-in.RequestSchema.json")}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  {...require("./create-nutrition-check-in.StatusCodes.json")}
+>
+  
+</StatusCodes>
+
+
+      
